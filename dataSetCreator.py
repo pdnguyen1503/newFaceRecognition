@@ -1,61 +1,24 @@
 import cv2
-import pymysql
-#coimport pymysql
-
-#database connection
-
-##
 
 cam = cv2.VideoCapture(0)
 cam.set(3,640)
 cam.set(4,640) 
+
 faceDetector=cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-
-#insert/update data to mysql phpmyadmin
-def insertOrUpdate(Id,Name):
-    connection = pymysql.connect(host="localhost", user="nguyenpc", passwd="nguyen1503", database="FaceBase")
-    cursor = connection.cursor()
-    cmd="SELECT * FROM People WHERE ID="+str(Id)
-    cursor.execute(cmd)
-    data = cursor.fetchall()
-    print(data)
-    isRecordExist=0
-    for row in data:
-        isRecordExist=1
-
-    print(isRecordExist)
-
-    if isRecordExist == 1:
-        cmd="UPDATE People SET Name="+"'"+str(Name)+"'"+" WHERE ID="+str(Id) + ";"
-    else:
-        cmd="INSERT INTO People(ID,Name) Values("+str(Id)+","+"'"+str(Name)+"'"+");"
-    print(cmd)
-    cursor.execute(cmd)
-    connection.commit()
-    connection.close()
-    
-id=raw_input('enter your id: ')
-name=raw_input('enter your name: ')
-insertOrUpdate(id,name)
+id=raw_input('\n enter user id end press <return> ==>  ')
+print("\n [INFO] Initializing face capture. Look the camera and wait ...")
 sampleNum=0
 while(True):
-    #camera read
     ret, img = cam.read()
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = faceDetector.detectMultiScale(gray, 1.3, 5)
     for (x,y,w,h) in faces:
         cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
-        
-        #incrementing sample number 
         sampleNum=sampleNum+1
-        #saving the captured face in the dataset folder
-        cv2.imwrite("dataSet/User."+id +'.'+ str(sampleNum) + ".jpg", gray[y:y+h,x:x+w])
-
+        #cv2.imwrite("dataSet/User."+id +'.'+ str(sampleNum) + ".jpg", gray[y:y+h,x:x+w])
         cv2.imshow('frame',img)
-    #wait for 100 miliseconds 
     if cv2.waitKey(100) & 0xFF == ord('q'):
         break
-    # break if the sample number is morethan 50
     elif sampleNum>50:
         break
 cam.release()

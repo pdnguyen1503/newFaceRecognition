@@ -4,9 +4,8 @@ from PIL import Image
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 path='dataSet'
-
+#Funtion to get image and labels of images
 def getImagesAndLabels(path):
-    #get the path of all the files in the folder
     imagePaths=[os.path.join(path,f) for f in os.listdir(path)] 
     faces=[]
     IDs=[]
@@ -14,7 +13,6 @@ def getImagesAndLabels(path):
         faceImg=Image.open(imagePath).convert('L');
         print(faceImg)
         faceNp=np.array(faceImg,'uint8')
-        #split to get ID of the image
         ID=int(os.path.split(imagePath)[-1].split('.')[1])
         faces.append(faceNp)
         print ID
