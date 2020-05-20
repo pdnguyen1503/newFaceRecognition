@@ -1,5 +1,4 @@
 import cv2
-import sqlite3
 import pymysql
 #coimport pymysql
 
@@ -8,11 +7,12 @@ import pymysql
 ##
 
 cam = cv2.VideoCapture(0)
-detector=cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+cam.set(3,640)
+cam.set(4,640) 
+faceDetector=cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
-#insert/update data to sqlite
+#insert/update data to mysql phpmyadmin
 def insertOrUpdate(Id,Name):
-    #connection=sqlite3.connect("FaceBase.db")
     connection = pymysql.connect(host="localhost", user="nguyenpc", passwd="nguyen1503", database="FaceBase")
     cursor = connection.cursor()
     cmd="SELECT * FROM People WHERE ID="+str(Id)
@@ -42,7 +42,7 @@ while(True):
     #camera read
     ret, img = cam.read()
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = detector.detectMultiScale(gray, 1.3, 5)
+    faces = faceDetector.detectMultiScale(gray, 1.3, 5)
     for (x,y,w,h) in faces:
         cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
         
