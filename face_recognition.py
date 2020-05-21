@@ -7,6 +7,8 @@ import pymysql
 
 faceDetect=cv2.CascadeClassifier('haarcascade_frontalface_default.xml');
 cam=cv2.VideoCapture(0);
+cam.set(3,640)
+cam.set(4,640) 
 rec=cv2.face.LBPHFaceRecognizer_create();
 rec.read("recognizer/trainningData.yml")
 id=0
