@@ -36,11 +36,11 @@ while(True):
     for(x,y,w,h) in faces:
         cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
         id,conf=rec.predict(gray[y:y+h,x:x+w])
-        profile=getProfile(id)
+        profile=getProfile(id) 
         #set text to window
         if(profile!=None):
             #cv2.PutText(cv2.fromarray(img),str(id),(x+y+h),font,(0,0,255),2);
-            cv2.putText(img, "Name: " + str(profile[1]), (x,y+h+30), fontface, fontscale, fontcolor ,2)
+            cv2.putText(img, "Name: " + str(profile[1] + "Id: " + id), (x,y+h+30), fontface, fontscale, fontcolor ,2)
         
         cv2.imshow('Face',img) 
     if cv2.waitKey(1)==ord('q'):
