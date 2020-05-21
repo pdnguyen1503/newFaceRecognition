@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from PIL import Image
-import pickle
+#import pickle
 import pymysql
 
 
@@ -15,7 +15,7 @@ fontface = cv2.FONT_HERSHEY_SIMPLEX
 fontscale = 1
 fontcolor = (203,23,252)
 
-#get data from sqlite by ID
+#get data from phpmyadmin by ID
 def getProfile(id):
     connection = pymysql.connect(host="localhost", user="nguyenpc", passwd="nguyen1503", database="FaceBase")
     cursor = connection.cursor()
