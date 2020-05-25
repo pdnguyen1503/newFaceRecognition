@@ -49,7 +49,6 @@ while(True):
         print(profile)
         #set text to window
         if(profile!=None):
-            #cv2.PutText(cv2.fromarray(img),str(id),(x+y+h),font,(0,0,255),2);
             cv2.putText(img, "Name: " + str(profile[1] + " --- Id: " + str(id)), (x,y+h+30), fontface, fontscale, fontcolor ,2)
         cv2.imshow('Face',img) 
     if cv2.waitKey(1)==ord('q'):
