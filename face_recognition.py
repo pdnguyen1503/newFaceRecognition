@@ -32,7 +32,8 @@ def getProfile(id):
         profile=row
     connection.close()
     return profile
-    
+
+print("\n [INFO] Initializing face capture. Look the camera and wait ...")
 while(True):
     #camera read
     ret,img=cam.read();
@@ -42,7 +43,6 @@ while(True):
         cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
         id,conf=rec.predict(gray[y:y+h,x:x+w])
         #id main 
-        id = id
         print(id)
         print("----")
         profile=getProfile(id) 
