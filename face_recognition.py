@@ -45,8 +45,9 @@ while(True):
         #id main 
         print(id)
         print("----")
+        print(conf)
         profile=getProfile(id) 
-        print(profile)
+        #print(profile)
         #set text to window
         if(profile!=None):
             cv2.putText(img, "Name: " + str(profile[1] + " --- Id: " + str(id)), (x,y+h+30), fontface, fontscale, fontcolor ,2)
