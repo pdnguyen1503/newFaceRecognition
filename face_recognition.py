@@ -21,17 +21,23 @@ fontscale = 1
 fontcolor = (203,23,252)
 
 #get all user from phpmyadmin by ID
-def getProfile(id):
+def getProfile():
     connection = pymysql.connect(host="localhost", user="nguyenpc", passwd="nguyen1503", database="FaceBase")
     cursor = connection.cursor()
-    cmd="SELECT * FROM People WHERE ID="+str(id)
+    cmd="SELECT * FROM `People`"
     cursor.execute(cmd)
-    data = cursor.fetchall()
-    profile=None
-    for row in data:
-        profile=row
-    connection.close()
-    return profile
+    people = cursor.fetchall()
+    peopleArray  = np.array(people)
+    print(peopleArray)
+    i = 0
+    personArray = ['unkown']
+    while i<len(peopleArray):
+    	print(peopleArray[i][1])
+    	personArray.append(peopleArray[i][1])
+    	#print(personArray)
+    	i+=1
+    return personArray
+personAll = getProfile()
 
 print("\n [INFO] Initializing face capture. Look the camera and wait ...")
 while(True):
@@ -46,11 +52,19 @@ while(True):
         print(id)
         print("----")
         print(conf)
-        profile=getProfile(id) 
+        if conf < 30:
+            namePerson = "unknown"
+            conf = "  {0}%".format(round(100 - conf))
+        if conf >30 and conf <100:
+            namePerson = personAll[id]
+            conf = "  {0}%".format(round(100 - conf))
+            
+        #cv2.putText(img, str(namePerson), (x+5,y-5), font, 1, (255,255,255), 2)
+        #cv2.putText(img, str(confidence), (x+5,y+h-5), font, 1, (255,255,0), 1)  
         #print(profile)
         #set text to window
-        if(profile!=None):
-            cv2.putText(img, "Name: " + str(profile[1] + " --- Id: " + str(id)), (x,y+h+30), fontface, fontscale, fontcolor ,2)
+        #if(profile!=None):
+        cv2.putText(img, "Name: " + str(namePerson) + " --- Id: " + str(id), (x,y+h+30), fontface, fontscale, fontcolor ,2)
         cv2.imshow('Face',img) 
     if cv2.waitKey(1)==ord('q'):
         break;
