@@ -22,7 +22,7 @@ while(True):
         cv2.imwrite("dataSet/User."+str(idFace) +'.'+ str(sampleNum) + ".jpg", gray[y:y+h,x:x+w])
     if cv2.waitKey(100) & 0xFF == ord('q'):
         break
-    elif sampleNum>=50:
+    elif sampleNum>=100:
         break
 print("\n [INFO] Exiting Program and cleanup stuff")
 cam.release()
