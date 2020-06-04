@@ -59,17 +59,19 @@ while(True):
         cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
         id,conf=recognizer.predict(gray[y:y+h,x:x+w])
         #id main 
-        print(id)
+        print("id: " + str(id))
         print("----")
         print(conf)
-        if conf < 30:
-            namePerson = "unknown"
-            conf = "  {0}%".format(round(100 - conf))
+        namePerson = "unknow"
+        #if conf < 30:
+        #    namePerson = "unknown"
+        #    conf = "  {0}%".format(round(100 - conf))
         if conf >30 and conf <100 and id >0:
-            namePerson = personAll[id-1]
-            conf = "  {0}%".format(round(100 - conf))
+            namePerson = personAll[id]
+            
+        #    conf = "  {0}%".format(round(100 - conf))
         cv2.putText(img, "Name: " + str(namePerson), (x,y+h+30), fontface, fontscale, fontcolor ,2)
-        cv2.putText(img, str(conf), (x+5,y+h-5), fontface, fontscale, fontcolor, 1)  
+        #cv2.putText(img, str(conf), (x+5,y+h-5), fontface, fontscale, fontcolor, 1)  
         cv2.imshow('Face',img) 
     if cv2.waitKey(1)==ord('q'):
         break;
