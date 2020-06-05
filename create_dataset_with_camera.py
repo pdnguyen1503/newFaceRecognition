@@ -14,9 +14,6 @@ sampleNum=0
 while(True):
     _, img = cam.read()
     print(img)
-    print('tesst')
-    img = img +2
-    print(img)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = faceDetector.detectMultiScale(gray, 1.3, 5)
     for (x,y,w,h) in faces:
