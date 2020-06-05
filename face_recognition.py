@@ -15,7 +15,6 @@ fontscale = 1
 fontcolor = (203,23,252)
 
 id = 0
-
 #get all user from phpmyadmin by ID
 def getProfile():
     connection = pymysql.connect(host="localhost", user="nguyenpc", passwd="nguyen1503", database="FaceBase")
@@ -24,13 +23,10 @@ def getProfile():
     cursor.execute(cmd)
     people = cursor.fetchall()
     peopleArray  = np.array(people)
-    #print(peopleArray)
     i = 0
     personArray = ['unkown']
     while i<len(peopleArray):
-    	#print(peopleArray[i][1])
     	personArray.append(peopleArray[i][1])
-    	#print(personArray)
     	i+=1
     return personArray
 personAll = getProfile()
@@ -58,20 +54,13 @@ while(True):
     for(x,y,w,h) in faces:
         cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
         id,conf=recognizer.predict(gray[y:y+h,x:x+w])
-        #id main 
         print("id: " + str(id))
         print("----")
         print(conf)
         namePerson = "unknow"
-        #if conf < 30:
-        #    namePerson = "unknown"
-        #    conf = "  {0}%".format(round(100 - conf))
         if conf >30 and conf <100 and id >0:
             namePerson = personAll[id]
-            
-        #    conf = "  {0}%".format(round(100 - conf))
         cv2.putText(img, "Name: " + str(namePerson), (x,y+h+30), fontface, fontscale, fontcolor ,2)
-        #cv2.putText(img, str(conf), (x+5,y+h-5), fontface, fontscale, fontcolor, 1)  
         cv2.imshow('Face',img) 
     if cv2.waitKey(1)==ord('q'):
         break;

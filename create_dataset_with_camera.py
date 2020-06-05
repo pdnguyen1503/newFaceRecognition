@@ -13,13 +13,17 @@ print("\n [INFO] Initializing face capture. Look the camera and wait ...")
 sampleNum=0
 while(True):
     _, img = cam.read()
-    #gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = faceDetector.detectMultiScale(img, 1.3, 5)
+    print(img)
+    print('tesst')
+    img = img +2
+    print(img)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faces = faceDetector.detectMultiScale(gray, 1.3, 5)
     for (x,y,w,h) in faces:
         cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
         sampleNum+=1
         cv2.imshow('Frame',img)
-        cv2.imwrite("nguyen/User."+str(idFace) +'.'+ str(sampleNum) + ".jpg", img[y:y+h,x:x+w])
+        cv2.imwrite("dataSet/User."+str(idFace) +'.'+ str(sampleNum) + ".jpg", gray[y:y+h,x:x+w])
     if cv2.waitKey(100) & 0xFF == ord('q'):
         break
     elif sampleNum>=100:
